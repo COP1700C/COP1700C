@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MySQL Class Lab 2</title>
+    </head>
+    <body>
+        <h1>MySQL Class Lab 2</h1>
+        <pre># lines with # are comments not SQL code- do not try to execute
+
+# to clear the mysql history
+> ~/.mysql_history
+
+# to log in to the MySQL server- enter the password when prompted- Pa11word
+mysql -u root -p
+
+# view the databases
+show databases;
+
+# select a database
+use employees;
+
+# view the tables for the selected database
+show tables;
+# to view the base tables and virtual tables labeled
+show full tables;
+
+# view the metadata/structure of the tables
+describe employees;
+describe departments;
+describe dept_emp;
+describe dept_manager;
+describe salaries;
+
+# display the data in the tables and sort results
+select * from employees;
+select * from employees order by last_name, first_name;
+select * from employees order by last_name desc, first_name asc;
+
+# insert data in to a table- insert your information into the employees database
+# insert into table name (attributes you must populate) values (literal values inserted);
+
+# specify criteria using a wildcard- where % stand for a string of characters
+select * from employees where gender='F';
+select * from departments where dept_name like 'S%';
+select * from employees where gender='F' and last_name like 'W%' order by last_name;
+#select the record with your information
+
+
+# JOINS
+# 3 different ways to join tables for multi table queries
+
+# multi table query using a join on the primary key= foreign key using aliases
+
+select e.first_name, e.last_name, e.birth_date, s.salary, s.from_date 
+from employees e, salaries s 
+where e.emp_no=s.emp_no
+and s.salary > 70000;
+
+select e.first_name, e.last_name, h.dept_name
+    from employees e, dept_emp d, departments h
+    where e.gender = 'F'
+    and e.emp_no = d.emp_no
+    and h.dept_no = d.dept_no
+    and h.dept_name= 'Human Resources' order by e.last_name desc; 
+
+# create a view from the previous query
+create view female_hr
+    as select e.first_name, e.last_name, d.dept_no, h.dept_name
+    from employees e, dept_emp d, departments h
+    where e.gender = 'F'
+    and e.emp_no = d.emp_no
+    and h.dept_no = d.dept_no
+    and h.dept_name= 'Human Resources' order by h.dept_name;
+
+# display the view created in the previous step- you won't have to run the above sql statement every time you want to look up women in the hr department. 
+It will be updated automatically.
+select * from female_hr;
+
+
+# JOIN ON- select attributes from table1 join table2 on (PK=FK)
+select e.first_name, e.last_name, e.birth_date, s.salary 
+from employees e join salaries s on (e.emp_no=s.emp_no)
+where salary< 50000;
+
+# JOIN USING-  select attributes from table1 join table2 using (common attribute_name)
+
+select m.emp_no, m.from_date, m.to_date, d.dept_name
+from dept_manager m join departments d using (emp_no)
+where d.dept_name='Sales';
+
+# to exit the mysql server
+quit
+
+# to display the mysql history file to verify that there is actual content
+cat ~/.mysql_history
+
+# to output your command history to a txt file (hint: use your up arrow to pull up the last command and pend to it.)
+cat ~/.mysql_history | sed 's/\\040/ /g' > ~/yourname_lab2.txt</pre>
+    </body>
+</html>
