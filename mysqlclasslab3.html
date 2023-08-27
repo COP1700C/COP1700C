@@ -5,10 +5,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>MySQL Class Lab 3</title>
+        <link href="prism-coy.css" rel="stylesheet" />
     </head>
     <body>
         <h1>MySQL Class Lab 3</h1>
-        <pre># lines with # are comments not SQL code- do not try to execute
+        <pre data-language="SQL" class="line-numbers language-sql"><code># lines with # are comments not SQL code- do not try to execute
 
 # to clear the mysql history
 > ~/.mysql_history
@@ -55,7 +56,7 @@ select first_name, last_name, birth_date from employees where name= 'yourname';
 # show the contents of the tables using Cartesian Product with projection using table alias
 # DO NOT run the following statements- Cartesian product do not include joins and will time out
 
-select e.first_name, e.last_name, e.birth_date, s.salary 
+select e.first_name, e.last_name, e.birth_date, s.salary
 from employees e, salaries s;
 
 select m.emp_no, m.from_date, m.to_date, d.dept_name
@@ -64,52 +65,52 @@ from dept_manager m, departments d;
 # show the contents of the tables using Restricted Cartesian Product with projection and selection
 # BEFORE running this statement we need to insert the syntax to join the tables
 
-select e.first_name, e.last_name, e.birth_date, s.salary 
-from employees e, salaries s
-where salary< 50000
-and 
+select e.first_name, e.last_name, e.birth_date, s.salary
+    from employees e, salaries s
+    where salary<50000
+    and
 ;
 
 select m.emp_no, m.from_date, m.to_date, d.dept_name
-from dept_manager m, departments d
-where d.dept_name='Sales'
-and
+    from dept_manager m, departments d
+    where d.dept_name='Sales'
+    and
 ;
 
 select m.emp_no, m.from_date, m.to_date, d.dept_name
-from dept_manager m, departments d
-where m.from_date > '1988-01-01'
-and
+    from dept_manager m, departments d
+    where m.from_date > '1988-01-01'
+    and
 ;
 
 
 #joins-
 
-# theta- binary operation using 2 tables and a predicate- 
+# theta- binary operation using 2 tables and a predicate-
 # Restricted Cartesian product and joining using the WHERE clause on PK=FK
 
-select e.first_name, e.last_name, e.birth_date, s.salary, s.from_date 
-from employees e, salaries s
-where e.emp_no=s.emp_no
-and s.salary > 72000 and e.birth_date= '1960-10-04';
+select e.first_name, e.last_name, e.birth_date, s.salary, s.from_date
+    from employees e, salaries s
+    where e.emp_no=s.emp_no
+    and s.salary > 72000 and e.birth_date= '1960-10-04';
 
-select e.first_name, e.last_name, m.from_date, m.to_date, d.dept_name 
-from employees e, dept_manager m, departments d
-where e.emp_no=m.emp_no
-and d.dept_no=m.dept_no
-and m.to_date <'1992-12-01';
+select e.first_name, e.last_name, m.from_date, m.to_date, d.dept_name
+    from employees e, dept_manager m, departments d
+    where e.emp_no=m.emp_no
+    and d.dept_no=m.dept_no
+    and m.to_date <code'1992-12-01';
 
-select e.first_name, e.last_name, e.birth_date, s.salary, s.from_date 
-from employees e, salaries s 
-where e.emp_no=s.emp_no
-and s.salary > 70000;
+select e.first_name, e.last_name, e.birth_date, s.salary, s.from_date
+    from employees e, salaries s
+    where e.emp_no=s.emp_no
+    and s.salary > 70000;
 
 # equi- binary operation using 2 tables with a predicate using only the '=' operator
-select e.first_name, e.last_name, m.from_date, m.to_date, d.dept_name 
-from employees e, dept_manager m, departments d 
-where e.emp_no=m.emp_no
-and d.dept_no=m.dept_no
-and d.dept_name ='development';
+select e.first_name, e.last_name, m.from_date, m.to_date, d.dept_name
+    from employees e, dept_manager m, departments d
+    where e.emp_no=m.emp_no
+    and d.dept_no=m.dept_no
+    and d.dept_name ='development';
 
 
 # add the necessary syntax in to make it an inner join
@@ -117,25 +118,25 @@ and d.dept_name ='development';
 # JOIN USING-  select attributes from table1 join table2 using (common attribute_name)
 # JOIN ON- select attributes from table1 join table2 on (PK=FK)
 
-select e.first_name, e.last_name, m.from_date, m.to_date, d.dept_name 
-from employees e, dept_manager m, departments d 
-where m.to_date ='1992-09-08'
+select e.first_name, e.last_name, m.from_date, m.to_date, d.dept_name
+    from employees e, dept_manager m, departments d
+    where m.to_date ='1992-09-08'
 
 
-select e.first_name, e.last_name, m.from_date, m.to_date, d.dept_name 
-from employees e, dept_manager m, departments d
-where d.dept_name= 'Marketing'
+select e.first_name, e.last_name, m.from_date, m.to_date, d.dept_name
+    from employees e, dept_manager m, departments d
+    where d.dept_name= 'Marketing'
 
 
-select e.first_name, e.last_name, t.title, m.from_date, m.to_date, d.dept_name 
-from employees e, dept_manager m, departments d, titles t
-where t.title='Manager' and d.dept_name='Finance'
+select e.first_name, e.last_name, t.title, m.from_date, m.to_date, d.dept_name
+    from employees e, dept_manager m, departments d, titles t
+    where t.title='Manager' and d.dept_name='Finance'
 
 
-select e.first_name, e.last_name, m.from_date, m.to_date, d.dept_name 
-from employees e, dept_manager m, departments d 
-where e.last_name Like 'M%' 
-or d.dept_name='Sales'
+select e.first_name, e.last_name, m.from_date, m.to_date, d.dept_name
+    from employees e, dept_manager m, departments d
+    where e.last_name Like 'M%'
+    or d.dept_name='Sales'
 
 
 # outer join- results include tuples that do not have a match on the join column (foreign key)
@@ -144,8 +145,8 @@ select attributes from table 1 right join table2 on (pk=fk)
 select attributes from table 1 full join table2 on (pk=fk)
 
 select e.first_name, e.last_name
-from employees e
-left join dept_manager m on e.emp_no=m.emp_no; 
+    from employees e
+    left join dept_manager m on e.emp_no=m.emp_no;
 
 
 # to exit the mysql server
@@ -155,6 +156,7 @@ quit
 cat ~/.mysql_history
 
 # to output your command history to a txt file (hint: use your up arrow to pull up the last command and pend to it.)
-cat ~/.mysql_history | sed 's/\\040/ /g' > ~/yourname_lab3.txt</pre>
+cat ~/.mysql_history | sed 's/\\040/ /g' > ~/yourname_lab3.txt</code></pre>
+        <script src="prism.js"></script>
     </body>
 </html>

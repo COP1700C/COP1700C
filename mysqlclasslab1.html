@@ -5,10 +5,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>MySQL Class Lab 1</title>
+        <link href="prism-coy.css" rel="stylesheet" />
     </head>
     <body>
         <h1>MySQL Class Lab 1</h1>
-        <pre># lines with # are comments not SQL code- do not execute
+        <pre data-language="SQL" class="line-numbers language-sql"><code># lines with # are comments not SQL code- do not execute
 
 # to clear the mysql history
 > ~/.mysql_history
@@ -34,16 +35,16 @@ select name, population from city where name='your city';
 
 # to create a database where % is a wildcard for a text string- create a name for you database
 create database %movies;
-# to load the database created in the previous step where % stands for the name of the database 
+# to load the database created in the previous step where % stands for the name of the database
 use %movies;
 
 # to create users in the current server
-create user 'yourname'@'localhost' identified by 'P@11word';
-create user 'yourpartner'@'localhost' identified by 'P@11word';
+create user 'yourname'&amp;'localhost' identified by 'P&amp;11word';
+create user 'yourpartner'&amp;'localhost' identified by 'P&amp;11word';
 
 # to grant privileges to the users created in the previous step
-grant all privileges on %movies.* to 'yourname'@'localhost';
-grant select on %movies.* to 'yourpartner'@'localhost';
+grant all privileges on %movies.* to 'yourname'&amp;'localhost';
+grant select on %movies.* to 'yourpartner'&amp;'localhost';
 
 # to create a table using line breaks
 create table studio (
@@ -61,26 +62,37 @@ insert into studio (studio_name, studio_city, studio_website) values ('your stud
 select * from studio;
 
 # to create a table related to the table created in the previous step- without line breaks
-create table movie (movie_id int not null auto_increment, movie_name varchar(100) not null, imdb_id char(9), release_city varchar(20), release_year int(4) not null, studio_id int, index (studio_id), 
-primary key (movie_id), foreign key (studio_id) references studio (studio_id) ON DELETE NO ACTION ON UPDATE CASCADE);
+create table movie (
+    movie_id int not null auto_increment,
+    movie_name varchar(100) not null,
+    imdb_id char(9),
+    release_city varchar(20),
+    release_year int(4) not null,
+    studio_id int,
+    index (studio_id),
+    primary key (movie_id),
+    foreign key (studio_id) references studio (studio_id)
+    ON DELETE NO ACTION ON UPDATE CASCADE);
 
 # to insert data in to the table created in the previous step
-insert into movie (movie_name, imdb_id, release_year, release_city, studio_id) values ('Magnolia','tt1211837', 2016, 'london', 1 );
-insert into movie (movie_name, imdb_id, release_year, release_city, studio_id) values ('Your Movie', 'your IMDB', your date, 'your city', your studio_id);
+insert into movie (movie_name, imdb_id, release_year, release_city, studio_id)
+    values ('Magnolia','tt1211837', 2016, 'london', 1 );
+insert into movie (movie_name, imdb_id, release_year, release_city, studio_id)
+    values ('Your Movie', 'your IMDB', your date, 'your city', your studio_id);
 
 # to display the data inserted in the previous step
 select * from movie;
 
 # to display data using a criteria
-select movie_id, movie_name 
-from movie
-where movie_name='Magnolia';
+select movie_id, movie_name
+    from movie
+    where movie_name='Magnolia';
 
 # to display data from 2 tables using the primary key and foreign key join
 select movie_name, release_year, release_city, studio_name
-from movie m, studio s 
-where m.studio_id=s.studio_id 
-and release_city='London';
+    from movie m, studio s
+    where m.studio_id=s.studio_id
+    and release_city='London';
 
 # to delete the table and/or database created- do not run these commands- just for reference
 drop table studio;
@@ -93,7 +105,7 @@ quit
 cat ~/.mysql_history
 
 # to output your command history to a txt file (hint: use your up arrow to pull up the last command and pend to it.)
-cat ~/.mysql_history | sed 's/\\040/ /g' > ~/yourname_lab1.txt
-</pre>
+cat ~/.mysql_history | sed 's/\040/ /g' > ~/yourname_lab1.txt</code></pre>
+        <script src="prism.js"></script>
     </body>
 </html>

@@ -5,10 +5,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>MySQL Class Lab 2</title>
+        <link rel="stylesheet" href="prism-coy.css">
     </head>
     <body>
         <h1>MySQL Class Lab 2</h1>
-        <pre># lines with # are comments not SQL code- do not try to execute
+        <pre data-language="SQL" class="line-numbers language-sql"><code># lines with # are comments not SQL code- do not try to execute
 
 # to clear the mysql history
 > ~/.mysql_history
@@ -54,17 +55,17 @@ select * from employees where gender='F' and last_name like 'W%' order by last_n
 
 # multi table query using a join on the primary key= foreign key using aliases
 
-select e.first_name, e.last_name, e.birth_date, s.salary, s.from_date 
-from employees e, salaries s 
-where e.emp_no=s.emp_no
-and s.salary > 70000;
+select e.first_name, e.last_name, e.birth_date, s.salary, s.from_date
+    from employees e, salaries s
+    where e.emp_no=s.emp_no
+    and s.salary > 70000;
 
 select e.first_name, e.last_name, h.dept_name
     from employees e, dept_emp d, departments h
     where e.gender = 'F'
     and e.emp_no = d.emp_no
     and h.dept_no = d.dept_no
-    and h.dept_name= 'Human Resources' order by e.last_name desc; 
+    and h.dept_name= 'Human Resources' order by e.last_name desc;
 
 # create a view from the previous query
 create view female_hr
@@ -75,21 +76,21 @@ create view female_hr
     and h.dept_no = d.dept_no
     and h.dept_name= 'Human Resources' order by h.dept_name;
 
-# display the view created in the previous step- you won't have to run the above sql statement every time you want to look up women in the hr department. 
+# display the view created in the previous step- you won't have to run the above sql statement every time you want to look up women in the hr department.
 It will be updated automatically.
 select * from female_hr;
 
 
 # JOIN ON- select attributes from table1 join table2 on (PK=FK)
-select e.first_name, e.last_name, e.birth_date, s.salary 
-from employees e join salaries s on (e.emp_no=s.emp_no)
-where salary< 50000;
+select e.first_name, e.last_name, e.birth_date, s.salary
+    from employees e join salaries s on (e.emp_no=s.emp_no)
+    where salary< 50000;
 
 # JOIN USING-  select attributes from table1 join table2 using (common attribute_name)
 
 select m.emp_no, m.from_date, m.to_date, d.dept_name
-from dept_manager m join departments d using (emp_no)
-where d.dept_name='Sales';
+    from dept_manager m join departments d using (emp_no)
+    where d.dept_name='Sales';
 
 # to exit the mysql server
 quit
@@ -99,5 +100,6 @@ cat ~/.mysql_history
 
 # to output your command history to a txt file (hint: use your up arrow to pull up the last command and pend to it.)
 cat ~/.mysql_history | sed 's/\\040/ /g' > ~/yourname_lab2.txt</pre>
+        <script src="prism.js"></script>
     </body>
 </html>
