@@ -89,7 +89,7 @@ select e.first_name, e.last_name, e.birth_date, s.salary
 # JOIN USING-  select attributes from table1 join table2 using (common attribute_name)
 
 select m.emp_no, m.from_date, m.to_date, d.dept_name
-    from dept_manager m join departments d using (emp_no)
+    from dept_manager m join departments d using (dept_no)
     where d.dept_name='Sales';
 
 # to exit the mysql server
