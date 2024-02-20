@@ -98,7 +98,7 @@ select e.first_name, e.last_name, m.from_date, m.to_date, d.dept_name
     from employees e, dept_manager m, departments d
     where e.emp_no=m.emp_no
     and d.dept_no=m.dept_no
-    and m.to_date <code'1992-12-01';
+    and m.to_date &gt; 1999-01-01;
 
 select e.first_name, e.last_name, e.birth_date, s.salary, s.from_date
     from employees e, salaries s
