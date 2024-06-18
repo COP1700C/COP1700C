@@ -20,12 +20,14 @@ mysql -u root -p
 
 # to display the database in the server
 show databases;
+
 # to load the database you want to work with
 use world;
+
 # to show the tables in the database that is loaded
 show tables;
 
-# to display the metadata/design of a table
+# to display the metadata/structure of a table
 describe city;
 
 # to display the data in a table
@@ -33,52 +35,58 @@ select * from city;
 select name, population from city;
 select name, population from city where name='your city';
 
-# to create a database where % is a wildcard for a text string- create a name for you database
+# to create a database where % is a wildcard for a text string- replace the % with a name for you database
 create database %movies;
+
 # to load the database created in the previous step where % stands for the name of the database
 use %movies;
 
 # to create users in the current server
-create user 'yourname'&commat;'localhost' identified by 'P&commat;11word';
-create user 'yourpartner'&commat;'localhost' identified by 'P&commat;11word';
+create user 'yourname'@'localhost' identified by 'P@11word';
+create user 'yourpartner'@'localhost' identified by 'P@11word';
 
 # to grant privileges to the users created in the previous step
-grant all privileges on %movies.* to 'yourname'&commat;'localhost';
-grant select on %movies.* to 'yourpartner'&commat;'localhost';
+grant all privileges on %movies.* to 'yourname'@'localhost';
+grant select on %movies.* to 'yourpartner'@'localhost';
 
-# to create a table using line breaks
+# to create a table
 create table studio (
     studio_id int not null auto_increment,
     studio_name varchar(100) not null,
-    studio_city varchar(20) not null,
-    studio_website varchar(25),
+    studio_city varchar(25) not null,
+    studio_website varchar(100),
     primary key(studio_id));
 
-# to insert data in to the table created in the previous step
-insert into studio (studio_name, studio_city, studio_website) values ('Paramount', 'NY', 'paramount.com');
-insert into studio (studio_name, studio_city, studio_website) values ('your studio', 'your city', 'your website');
+# to insert data in to the table created in the previous step- insert the sample data given in the first command- then insert data of your choice
+
+insert into studio (studio_name, studio_city, studio_website)
+    values ('Paramount', 'NY', 'paramount.com');
+
+insert into studio (studio_name, studio_city, studio_website)
+    values ('your studio', 'your city', 'your website');
 
 # to display the data inserted in the previous step
 select * from studio;
 
-# to create a table related to the table created in the previous step- without line breaks
+# to create a table related to the table created in the previous step and index the FK
 create table movie (
     movie_id int not null auto_increment,
     movie_name varchar(100) not null,
-    imdb_id char(9),
-    release_city varchar(20),
-    release_year int(4) not null,
-    studio_id int,
+    release_city varchar(25),
+    release_year int not null,
+    studio_id int not null,
     index (studio_id),
     primary key (movie_id),
     foreign key (studio_id) references studio (studio_id)
     ON DELETE NO ACTION ON UPDATE CASCADE);
 
-# to insert data in to the table created in the previous step
-insert into movie (movie_name, imdb_id, release_year, release_city, studio_id)
-    values ('Magnolia','tt1211837', 2016, 'london', 1 );
-insert into movie (movie_name, imdb_id, release_year, release_city, studio_id)
-    values ('Your Movie', 'your IMDB', your date, 'your city', your studio_id);
+# to insert data in to the table created in the previous step-insert the sample data given in the first command- then insert data of your choice
+
+insert into movie (movie_name, release_year, release_city, studio_id)
+    values ('Magnolia', 2016, 'london', 1 );
+
+insert into movie (movie_name, release_year, release_city, studio_id)
+    values ('Your Movie', your date, 'your city', your studio_id);
 
 # to display the data inserted in the previous step
 select * from movie;
@@ -88,7 +96,8 @@ select movie_id, movie_name
     from movie
     where movie_name='Magnolia';
 
-# to display data from 2 tables using the primary key and foreign key join
+# to display data from 2 tables using the primary key and foreign key to join the tables and table aliases
+
 select movie_name, release_year, release_city, studio_name
     from movie m, studio s
     where m.studio_id=s.studio_id
@@ -105,7 +114,7 @@ quit
 cat ~/.mysql_history
 
 # to output your command history to a txt file (hint: use your up arrow to pull up the last command and pend to it.)
-cat ~/.mysql_history | sed 's/\040/ /g' > ~/yourname_lab1.txt</code></pre>
+cat ~/.mysql_history | sed 's/\\040/ /g' > ~/yourname_lab1.txt</code></pre>
         <script src="prism.js"></script>
     </body>
 </html>

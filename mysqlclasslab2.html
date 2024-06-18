@@ -28,7 +28,7 @@ show tables;
 # to view the base tables and virtual tables labeled
 show full tables;
 
-# view the metadata/structure of the tables
+# view the metadata/structure of a table
 describe employees;
 describe departments;
 describe dept_emp;
@@ -40,57 +40,68 @@ select * from employees;
 select * from employees order by last_name, first_name;
 select * from employees order by last_name desc, first_name asc;
 
-# insert data in to a table- insert your information into the employees database
-# insert into table name (attributes you must populate) values (literal values inserted);
+# insert data into a table- insert your information into the employees database- make up an employ number, use your real last name and first name, chose a gender, use today's date for birth date and hired date.
+
+insert into employees (emp_no, last_name,first_name,birth_date,gender,date_hired) values (1234,'your last name','your first name',20240606,'F',20240606);
 
 # specify criteria using a wildcard- where % stand for a string of characters
 select * from employees where gender='F';
-select * from departments where dept_name like 'S%';
 select * from employees where gender='F' and last_name like 'W%' order by last_name;
-#select the record with your information
+
+# select the record with your information- figure out the syntax to find the record with your information- line 35
 
 
 # JOINS
 # 3 different ways to join tables for multi table queries
 
-# multi table query using a join on the primary key= foreign key using aliases
+# multi table query using the WHERE clause to join on the primary key= foreign key using table aliases when there is an ambiguity on attribute names
 
-select e.first_name, e.last_name, e.birth_date, s.salary, s.from_date
+# search all salary records of employees that are greater than $70K
+select first_name, last_name, salary, from_date
     from employees e, salaries s
     where e.emp_no=s.emp_no
-    and s.salary > 70000;
+    and salary > 70000;
 
-select e.first_name, e.last_name, h.dept_name
+# search all employees who are female and what departments they have worked in
+select first_name, last_name, dept_name
     from employees e, dept_emp d, departments h
-    where e.gender = 'F'
+    where gender = 'F'
     and e.emp_no = d.emp_no
     and h.dept_no = d.dept_no
-    and h.dept_name= 'Human Resources' order by e.last_name desc;
+    order by e.emp_no desc;
 
-# create a view from the previous query
+# create a view to display the females working in the HR department
 create view female_hr
-    as select e.first_name, e.last_name, d.dept_no, h.dept_name
+    as select first_name, last_name, dept_name
     from employees e, dept_emp d, departments h
-    where e.gender = 'F'
+    where gender = 'F'
     and e.emp_no = d.emp_no
     and h.dept_no = d.dept_no
-    and h.dept_name= 'Human Resources' order by h.dept_name;
+    and dept_name= 'Human Resources' order by e.emp_no desc;
 
 # display the view created in the previous step- you won't have to run the above sql statement every time you want to look up women in the hr department.
-# It will be updated automatically.
 select * from female_hr;
 
 
-# JOIN ON- select attributes from table1 join table2 on (PK=FK)
-select e.first_name, e.last_name, e.birth_date, s.salary
+# multi table query using the JOIN ON command- select attributes from table1 join table2 on (PK=FK)
+
+# search all salary records of employees that are less than $50K
+select first_name, last_name, from_date, salary
     from employees e join salaries s on (e.emp_no=s.emp_no)
-    where salary< 50000;
+    where salary < 50000;
 
-# JOIN USING-  select attributes from table1 join table2 using (common attribute_name)
+# multi table query using the JOIN USING command- select attributes from table1 join table2 using (common attribute_name)
 
-select m.emp_no, m.from_date, m.to_date, d.dept_name
-    from dept_manager m join departments d using (dept_no)
-    where d.dept_name='Sales';
+# search all employees that have managed a department
+select last_name, from_date, to_date, dept_name
+    from employees join dept_manager using (emp_no)
+    join departments using (dept_no);
+
+# search all employees that have managed the Sales department
+select last_name, m.from_date, m.to_date, dept_name
+    from employees join dept_manager using (emp_no)
+    join departments using (dept_no)
+    where dept_name='Sales';
 
 # to exit the mysql server
 quit
