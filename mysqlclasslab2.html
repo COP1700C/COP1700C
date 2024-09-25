@@ -98,7 +98,7 @@ select last_name, from_date, to_date, dept_name
     join departments using (dept_no);
 
 # search all employees that have managed the Sales department
-select last_name, m.from_date, m.to_date, dept_name
+select last_name, from_date, to_date, dept_name
     from employees join dept_manager using (emp_no)
     join departments using (dept_no)
     where dept_name='Sales';
