@@ -46,8 +46,8 @@ create user 'yourname@localhost' identified by 'P@11word';
 create user 'yourpartner@localhost' identified by 'P@11word';
 
 # to grant privileges to the users created in the previous step
-grant all privileges on %movies.* to 'yourname'@'localhost';
-grant select on %movies.* to 'yourpartner'@'localhost';
+grant all privileges on %movies.* to 'yourname@localhost';
+grant select on %movies.* to 'yourpartner@localhost';
 
 # to create a table
 create table studio (
