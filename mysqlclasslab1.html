@@ -42,8 +42,8 @@ create database %movies;
 use %movies;
 
 # to create users in the current server
-create user 'yourname'@'localhost' identified by 'P@11word';
-create user 'yourpartner'@'localhost' identified by 'P@11word';
+create user 'yourname@localhost' identified by 'P@11word';
+create user 'yourpartner@localhost' identified by 'P@11word';
 
 # to grant privileges to the users created in the previous step
 grant all privileges on %movies.* to 'yourname'@'localhost';
